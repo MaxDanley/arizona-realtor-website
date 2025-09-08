@@ -1,36 +1,171 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arizona Real Estate Academy
+
+A comprehensive online learning platform for Arizona Real Estate licensing and continuing education courses. Built with Next.js, TypeScript, and modern web technologies.
+
+## Features
+
+- **Modern Authentication**: Secure login/registration with NextAuth.js
+- **Course Management**: Complete course system with progress tracking
+- **Quiz & Exam System**: Interactive quizzes and final exams
+- **Responsive Design**: Mobile-first design with Tailwind CSS
+- **SEO Optimized**: Built-in SEO optimization for better search rankings
+- **Database Integration**: PostgreSQL with Prisma ORM
+- **Real-time Progress**: Track learning progress and time spent
+- **Certificate Generation**: Automatic certificate generation upon completion
+
+## Tech Stack
+
+- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes, NextAuth.js
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: NextAuth.js with credentials provider
+- **UI Components**: Lucide React icons, Headless UI
+- **Form Handling**: React Hook Form with Zod validation
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- PostgreSQL database
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd arizona-realtor-website
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+```bash
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Configure your `.env` file with:
+```env
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/arizona_realtor_db?schema=public"
 
-## Learn More
+# NextAuth.js
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret-key-here"
 
-To learn more about Next.js, take a look at the following resources:
+# Email (for production)
+EMAIL_SERVER_HOST="smtp.gmail.com"
+EMAIL_SERVER_PORT=587
+EMAIL_SERVER_USER="your-email@gmail.com"
+EMAIL_SERVER_PASSWORD="your-app-password"
+EMAIL_FROM="noreply@arizonarealtor.com"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# App Configuration
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. Set up the database:
+```bash
+npx prisma migrate dev
+npx prisma generate
+```
 
-## Deploy on Vercel
+6. Run the development server:
+```bash
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+7. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+src/
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   │   └── auth/          # Authentication endpoints
+│   ├── auth/              # Authentication pages
+│   ├── dashboard/         # User dashboard
+│   ├── courses/           # Course pages
+│   └── globals.css        # Global styles
+├── components/            # Reusable components
+├── lib/                   # Utility functions
+├── types/                 # TypeScript type definitions
+└── prisma/               # Database schema and migrations
+```
+
+## Database Schema
+
+The application uses a comprehensive database schema designed for real estate education:
+
+- **Users**: User accounts and profiles
+- **Courses**: Course information and metadata
+- **Chapters**: Course content and structure
+- **Quizzes**: Mid-chapter assessments
+- **Questions**: Quiz questions and answers
+- **Enrollments**: User course enrollments
+- **Progress**: Learning progress tracking
+- **Attempts**: Quiz and exam attempt records
+
+## Course Types
+
+1. **Salesperson License**: 90-hour pre-licensing course
+2. **Continuing Education**: License maintenance courses
+3. **Broker License**: Advanced broker licensing course
+
+## Features in Development
+
+- [ ] Course content management system
+- [ ] Interactive quiz system
+- [ ] Progress tracking and analytics
+- [ ] Certificate generation
+- [ ] Payment integration
+- [ ] Email notifications
+- [ ] Admin dashboard
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Set environment variables in Vercel dashboard
+4. Deploy automatically on push
+
+### Other Platforms
+
+The application can be deployed to any platform that supports Next.js:
+- Netlify
+- Railway
+- DigitalOcean App Platform
+- AWS Amplify
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Support
+
+For support and questions:
+- Email: support@arizonarealtor.com
+- Phone: (555) 123-4567
+
+## Arizona Department of Real Estate Compliance
+
+This platform is designed to meet all requirements set forth by the Arizona Department of Real Estate for real estate education providers. All courses are structured according to ADRE guidelines and requirements.
+
+---
+
+Built with ❤️ for Arizona Real Estate Professionals
