@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { BookOpen, Eye, EyeOff, Loader2, CheckCircle } from 'lucide-react'
+import { FadeInUp, ScaleIn } from '@/components/animations'
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -90,58 +91,78 @@ export default function SignUp() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 text-center">
-            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Account Created Successfully!</h2>
-            <p className="text-gray-600 mb-4">
-              Your account has been created. You can now sign in to access your courses.
-            </p>
-            <Link
-              href="/auth/signin"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium transition-colors"
-            >
-              Sign In
-            </Link>
+      <div className="min-h-screen bg-gradient-to-br from-teal-900 via-teal-800 to-teal-700 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 opacity-10">
+            <div className="w-full h-full bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:40px_40px]"></div>
           </div>
+          <div className="absolute inset-0 opacity-5">
+            <div className="w-full h-full bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
+          </div>
+        </div>
+        
+        <div className="relative sm:mx-auto sm:w-full sm:max-w-md">
+          <ScaleIn>
+            <div className="bg-white/10 backdrop-blur-md py-8 px-4 shadow-2xl sm:rounded-2xl sm:px-10 text-center border border-white/20">
+              <CheckCircle className="h-16 w-16 text-lime-400 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-white mb-2">Account Created Successfully!</h2>
+              <p className="text-teal-200 mb-4">
+                Your account has been created. You can now sign in to access your courses.
+              </p>
+              <Link
+                href="/auth/signin"
+                className="bg-lime-400 hover:bg-lime-500 text-black px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                Sign In
+              </Link>
+            </div>
+          </ScaleIn>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <BookOpen className="h-12 w-12 text-blue-600" />
+    <div className="min-h-screen bg-gradient-to-br from-teal-900 via-teal-800 to-teal-700 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 opacity-10">
+          <div className="w-full h-full bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:40px_40px]"></div>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Create your account
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Or{' '}
-          <Link
-            href="/auth/signin"
-            className="font-medium text-blue-600 hover:text-blue-500"
-          >
-            sign in to your existing account
-          </Link>
-        </p>
+        <div className="absolute inset-0 opacity-5">
+          <div className="w-full h-full bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
+        </div>
+      </div>
+      <div className="relative sm:mx-auto sm:w-full sm:max-w-md">
+        <FadeInUp className="text-center">
+          <div className="flex justify-center mb-6">
+            <div className="bg-lime-400 p-3 rounded-full">
+              <BookOpen className="h-12 w-12 text-black" />
+            </div>
+          </div>
+          <h2 className="text-3xl font-extrabold text-white mb-2">
+            Join Our Academy
+          </h2>
+          <p className="text-teal-200">
+            Start your real estate journey today
+          </p>
+        </FadeInUp>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div className="relative mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <ScaleIn>
+          <div className="bg-white/10 backdrop-blur-md py-8 px-4 shadow-2xl sm:rounded-2xl sm:px-10 border border-white/20">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">
+              <div className="bg-red-500/20 border border-red-400 text-red-200 px-4 py-3 rounded-lg backdrop-blur-sm">
                 {error}
               </div>
             )}
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="firstName" className="block text-sm font-medium text-white mb-2">
                   First Name *
                 </label>
                 <input
@@ -151,11 +172,11 @@ export default function SignUp() {
                   required
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none block w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg placeholder-teal-300 text-white focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 backdrop-blur-sm transition-all duration-300"
                 />
               </div>
               <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="lastName" className="block text-sm font-medium text-white mb-2">
                   Last Name *
                 </label>
                 <input
@@ -165,13 +186,13 @@ export default function SignUp() {
                   required
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none block w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg placeholder-teal-300 text-white focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 backdrop-blur-sm transition-all duration-300"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
                 Email Address *
               </label>
               <input
@@ -182,13 +203,13 @@ export default function SignUp() {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="appearance-none block w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg placeholder-teal-300 text-white focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 backdrop-blur-sm transition-all duration-300"
                 placeholder="Enter your email"
               />
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="phone" className="block text-sm font-medium text-white mb-2">
                 Phone Number
               </label>
               <input
@@ -197,13 +218,13 @@ export default function SignUp() {
                 type="tel"
                 value={formData.phone}
                 onChange={handleChange}
-                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="appearance-none block w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg placeholder-teal-300 text-white focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 backdrop-blur-sm transition-all duration-300"
                 placeholder="(555) 123-4567"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-white mb-2">
                 Password *
               </label>
               <div className="mt-1 relative">
@@ -215,7 +236,7 @@ export default function SignUp() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none block w-full px-4 py-3 pr-12 bg-white/10 border border-white/20 rounded-lg placeholder-teal-300 text-white focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 backdrop-blur-sm transition-all duration-300"
                   placeholder="Create a password"
                 />
                 <button
@@ -224,16 +245,16 @@ export default function SignUp() {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400" />
+                    <EyeOff className="h-5 w-5 text-teal-300 hover:text-white transition-colors" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400" />
+                    <Eye className="h-5 w-5 text-teal-300 hover:text-white transition-colors" />
                   )}
                 </button>
               </div>
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-white mb-2">
                 Confirm Password *
               </label>
               <div className="mt-1 relative">
@@ -245,7 +266,7 @@ export default function SignUp() {
                   required
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none block w-full px-4 py-3 pr-12 bg-white/10 border border-white/20 rounded-lg placeholder-teal-300 text-white focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 backdrop-blur-sm transition-all duration-300"
                   placeholder="Confirm your password"
                 />
                 <button
@@ -254,16 +275,16 @@ export default function SignUp() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                   {showConfirmPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400" />
+                    <EyeOff className="h-5 w-5 text-teal-300 hover:text-white transition-colors" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400" />
+                    <Eye className="h-5 w-5 text-teal-300 hover:text-white transition-colors" />
                   )}
                 </button>
               </div>
             </div>
 
             <div>
-              <label htmlFor="licenseNumber" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="licenseNumber" className="block text-sm font-medium text-white mb-2">
                 Arizona Real Estate License Number (if applicable)
               </label>
               <input
@@ -272,7 +293,7 @@ export default function SignUp() {
                 type="text"
                 value={formData.licenseNumber}
                 onChange={handleChange}
-                className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="appearance-none block w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg placeholder-teal-300 text-white focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 backdrop-blur-sm transition-all duration-300"
                 placeholder="Enter your license number"
               />
             </div>
@@ -281,7 +302,7 @@ export default function SignUp() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-sm font-semibold text-black bg-lime-400 hover:bg-lime-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
               >
                 {isLoading ? (
                   <>
@@ -298,23 +319,24 @@ export default function SignUp() {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+                <div className="w-full border-t border-white/20" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Already have an account?</span>
+                <span className="px-2 bg-transparent text-teal-200">Already have an account?</span>
               </div>
             </div>
 
             <div className="mt-6">
               <Link
                 href="/auth/signin"
-                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="w-full flex justify-center py-3 px-4 border border-white/20 rounded-lg shadow-sm text-sm font-medium text-white bg-white/10 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-400 backdrop-blur-sm transition-all duration-300"
               >
                 Sign in to your account
               </Link>
             </div>
           </div>
-        </div>
+          </div>
+        </ScaleIn>
       </div>
     </div>
   )
