@@ -131,10 +131,41 @@ The application uses a comprehensive database schema designed for real estate ed
 
 ### Vercel (Recommended)
 
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Set environment variables in Vercel dashboard
-4. Deploy automatically on push
+1. **Push your code to GitHub**
+   ```bash
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+   ```
+
+2. **Connect to Vercel**
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Vercel will automatically detect Next.js
+
+3. **Set Environment Variables in Vercel Dashboard**
+   ```
+   DATABASE_URL=postgresql://username:password@host:port/database?schema=public
+   NEXTAUTH_URL=https://your-domain.vercel.app
+   NEXTAUTH_SECRET=your-secret-key-here
+   NEXT_PUBLIC_APP_URL=https://your-domain.vercel.app
+   ```
+
+4. **Database Setup**
+   - Use Vercel Postgres, Neon, or Supabase for production database
+   - Run migrations: `npx prisma migrate deploy`
+   - Generate client: `npx prisma generate`
+
+5. **Deploy**
+   - Vercel will automatically build and deploy
+   - The build process includes `prisma generate` automatically
+
+### Database Providers for Production
+
+- **Vercel Postgres**: Integrated with Vercel
+- **Neon**: Serverless PostgreSQL
+- **Supabase**: PostgreSQL with additional features
+- **PlanetScale**: MySQL-compatible database
 
 ### Other Platforms
 
