@@ -88,7 +88,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Money-Back Guarantee</h3>
               <p className="text-gray-600">
-                Not satisfied? Get your money back within 30 days. We're confident you'll love our courses.
+                Not satisfied? Get your money back within 30 days. We&apos;re confident you&apos;ll love our courses.
               </p>
             </div>
 
@@ -133,7 +133,7 @@ export default function Home() {
               Choose Your Path
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Whether you're starting your real estate career or maintaining your license, we have the right course for you.
+              Whether you&apos;re starting your real estate career or maintaining your license, we have the right course for you.
             </p>
           </div>
 

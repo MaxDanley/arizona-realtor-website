@@ -70,7 +70,7 @@ export default function Courses() {
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
               State-approved courses designed to help you succeed in your real estate career. 
-              Choose the path that's right for you.
+              Choose the path that&apos;s right for you.
             </p>
           </div>
         </div>
@@ -146,7 +146,7 @@ export default function Courses() {
               Why Choose Arizona Real Estate Academy?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We're committed to providing the best real estate education experience in Arizona.
+              We&apos;re committed to providing the best real estate education experience in Arizona.
             </p>
           </div>
 
