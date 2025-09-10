@@ -32,15 +32,15 @@ export default function Home() {
         <div className="absolute inset-0">
           {/* Animated Wireframe Grid Pattern with Circular Gradient */}
           <div className="absolute inset-0 wireframe-container">
-            <div className="w-full h-full wireframe-grid animate-wireframe-wave"></div>
+            <div className="w-full h-full wireframe-grid"></div>
           </div>
           {/* Secondary Grid Layer for Depth */}
           <div className="absolute inset-0 wireframe-container-secondary">
-            <div className="w-full h-full wireframe-grid-secondary animate-wireframe-wave-slow"></div>
+            <div className="w-full h-full wireframe-grid-secondary"></div>
           </div>
           {/* Dot Pattern Overlay */}
           <div className="absolute inset-0 wireframe-container-dots">
-            <div className="w-full h-full wireframe-dots animate-wireframe-float"></div>
+            <div className="w-full h-full wireframe-dots"></div>
           </div>
         </div>
         
