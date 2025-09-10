@@ -59,38 +59,73 @@ html {
 
 @keyframes wireframe-wave {
   0%, 100% {
-    transform: translateX(0px) translateY(0px);
+    transform: translateX(0px) translateY(0px) rotate(0deg);
   }
   25% {
-    transform: translateX(2px) translateY(-1px);
+    transform: translateX(3px) translateY(-2px) rotate(0.5deg);
   }
   50% {
-    transform: translateX(-1px) translateY(2px);
+    transform: translateX(-2px) translateY(3px) rotate(-0.5deg);
   }
   75% {
-    transform: translateX(-2px) translateY(-1px);
+    transform: translateX(-3px) translateY(-1px) rotate(0.3deg);
   }
 }
 
 @keyframes wireframe-wave-slow {
   0%, 100% {
-    transform: translateX(0px) translateY(0px);
+    transform: translateX(0px) translateY(0px) rotate(0deg);
   }
   33% {
-    transform: translateX(1px) translateY(-2px);
+    transform: translateX(2px) translateY(-3px) rotate(-0.3deg);
   }
   66% {
-    transform: translateX(-1px) translateY(1px);
+    transform: translateX(-2px) translateY(2px) rotate(0.3deg);
   }
 }
 
 @keyframes wireframe-float {
   0%, 100% {
-    transform: translateY(0px) scale(1);
+    transform: translateY(0px) scale(1) rotate(0deg);
   }
   50% {
-    transform: translateY(-3px) scale(1.02);
+    transform: translateY(-4px) scale(1.03) rotate(0.2deg);
   }
+}
+
+/* Wireframe Pattern Classes */
+.wireframe-container {
+  mask-image: radial-gradient(ellipse at center, black 0%, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 0%, black 30%, transparent 70%);
+}
+
+.wireframe-container-secondary {
+  mask-image: radial-gradient(ellipse at center, black 0%, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 0%, black 40%, transparent 80%);
+}
+
+.wireframe-container-dots {
+  mask-image: radial-gradient(ellipse at center, black 0%, black 50%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 0%, black 50%, transparent 90%);
+}
+
+.wireframe-grid {
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.wireframe-grid-secondary {
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.25) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.wireframe-dots {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.5) 1px, transparent 0);
+  background-size: 20px 20px;
 }
 
 .float-animation {

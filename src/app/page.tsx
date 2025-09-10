@@ -31,26 +31,16 @@ export default function Home() {
         {/* Background Pattern */}
         <div className="absolute inset-0">
           {/* Animated Wireframe Grid Pattern with Circular Gradient */}
-          <div className="absolute inset-0">
-            <div className="w-full h-full bg-[linear-gradient(rgba(255,255,255,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.3)_1px,transparent_1px)] bg-[length:40px_40px] animate-wireframe-wave"
-                 style={{
-                   maskImage: 'radial-gradient(ellipse_at_center,black_0%,black_40%,transparent_70%)',
-                   WebkitMaskImage: 'radial-gradient(ellipse_at_center,black_0%,black_40%,transparent_70%)'
-                 }}>
-            </div>
+          <div className="absolute inset-0 wireframe-container">
+            <div className="w-full h-full wireframe-grid animate-wireframe-wave"></div>
           </div>
           {/* Secondary Grid Layer for Depth */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="w-full h-full bg-[linear-gradient(rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[length:60px_60px] animate-wireframe-wave-slow"
-                 style={{
-                   maskImage: 'radial-gradient(ellipse_at_center,black_0%,black_50%,transparent_80%)',
-                   WebkitMaskImage: 'radial-gradient(ellipse_at_center,black_0%,black_50%,transparent_80%)'
-                 }}>
-            </div>
+          <div className="absolute inset-0 wireframe-container-secondary">
+            <div className="w-full h-full wireframe-grid-secondary animate-wireframe-wave-slow"></div>
           </div>
           {/* Dot Pattern Overlay */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="w-full h-full bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.4)_1px,transparent_0)] bg-[length:20px_20px] animate-wireframe-float"></div>
+          <div className="absolute inset-0 wireframe-container-dots">
+            <div className="w-full h-full wireframe-dots animate-wireframe-float"></div>
           </div>
         </div>
         
