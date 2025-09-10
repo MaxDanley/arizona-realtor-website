@@ -19,9 +19,6 @@ model User {
   lastName      String
   phone         String?
   address       String?
-  city          String?
-  state         String?
-  zipCode       String?
   licenseNumber String?   // Arizona Real Estate License Number
   isActive      Boolean   @default(true)
   createdAt     DateTime  @default(now())
