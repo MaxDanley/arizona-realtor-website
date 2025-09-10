@@ -30,13 +30,27 @@ export default function Home() {
       <section className="relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0">
-          {/* Wireframe Grid Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="w-full h-full bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:40px_40px]"></div>
+          {/* Animated Wireframe Grid Pattern with Circular Gradient */}
+          <div className="absolute inset-0">
+            <div className="w-full h-full bg-[linear-gradient(rgba(255,255,255,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.3)_1px,transparent_1px)] bg-[length:40px_40px] animate-wireframe-wave"
+                 style={{
+                   maskImage: 'radial-gradient(ellipse_at_center,black_0%,black_40%,transparent_70%)',
+                   WebkitMaskImage: 'radial-gradient(ellipse_at_center,black_0%,black_40%,transparent_70%)'
+                 }}>
+            </div>
+          </div>
+          {/* Secondary Grid Layer for Depth */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="w-full h-full bg-[linear-gradient(rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[length:60px_60px] animate-wireframe-wave-slow"
+                 style={{
+                   maskImage: 'radial-gradient(ellipse_at_center,black_0%,black_50%,transparent_80%)',
+                   WebkitMaskImage: 'radial-gradient(ellipse_at_center,black_0%,black_50%,transparent_80%)'
+                 }}>
+            </div>
           </div>
           {/* Dot Pattern Overlay */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="w-full h-full bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
+          <div className="absolute inset-0 opacity-10">
+            <div className="w-full h-full bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.4)_1px,transparent_0)] bg-[length:20px_20px] animate-wireframe-float"></div>
           </div>
         </div>
         
