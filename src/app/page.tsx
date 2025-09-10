@@ -27,22 +27,7 @@ export default function Home() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0">
-          {/* Animated Wireframe Grid Pattern with Circular Gradient */}
-          <div className="absolute inset-0 wireframe-container">
-            <div className="w-full h-full wireframe-grid"></div>
-          </div>
-          {/* Secondary Grid Layer for Depth */}
-          <div className="absolute inset-0 wireframe-container-secondary">
-            <div className="w-full h-full wireframe-grid-secondary"></div>
-          </div>
-          {/* Dot Pattern Overlay */}
-          <div className="absolute inset-0 wireframe-container-dots">
-            <div className="w-full h-full wireframe-dots"></div>
-          </div>
-        </div>
+      <section className="relative">
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">

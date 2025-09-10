@@ -10,9 +10,6 @@ const registerSchema = z.object({
   lastName: z.string().min(1),
   phone: z.string().optional(),
   address: z.string().optional(),
-  city: z.string().optional(),
-  state: z.string().optional(),
-  zipCode: z.string().optional(),
   licenseNumber: z.string().optional(),
 })
 
@@ -39,8 +36,13 @@ export async function POST(request: NextRequest) {
     // Create user
     const user = await prisma.user.create({
       data: {
-        ...validatedData,
+        email: validatedData.email,
         password: hashedPassword,
+        firstName: validatedData.firstName,
+        lastName: validatedData.lastName,
+        phone: validatedData.phone,
+        address: validatedData.address,
+        licenseNumber: validatedData.licenseNumber,
       },
       select: {
         id: true,
@@ -49,9 +51,6 @@ export async function POST(request: NextRequest) {
         lastName: true,
         phone: true,
         address: true,
-        city: true,
-        state: true,
-        zipCode: true,
         licenseNumber: true,
         createdAt: true,
       }

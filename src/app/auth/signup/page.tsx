@@ -15,9 +15,6 @@ export default function SignUp() {
     lastName: '',
     phone: '',
     address: '',
-    city: '',
-    state: 'AZ',
-    zipCode: '',
     licenseNumber: '',
   })
   const [showPassword, setShowPassword] = useState(false)
@@ -65,9 +62,6 @@ export default function SignUp() {
           lastName: formData.lastName,
           phone: formData.phone || undefined,
           address: formData.address || undefined,
-          city: formData.city || undefined,
-          state: formData.state || undefined,
-          zipCode: formData.zipCode || undefined,
           licenseNumber: formData.licenseNumber || undefined,
         }),
       })
