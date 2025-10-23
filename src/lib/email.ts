@@ -50,12 +50,13 @@ export class EmailService {
     `
 
     try {
-      return await resend.emails.send({
+      const result = await resend.emails.send({
         from: 'Arizona Real Estate Academy <noreply@arizonarealestateacademy.com>',
         to: email,
         subject: 'Verify Your Email - Arizona Real Estate Academy',
         html
       })
+      return { success: true, data: result }
     } catch (error) {
       console.error('Failed to send verification email:', error)
       return { success: false, error: 'Failed to send email' }
@@ -101,12 +102,13 @@ export class EmailService {
     `
 
     try {
-      return await resend.emails.send({
+      const result = await resend.emails.send({
         from: 'Arizona Real Estate Academy <noreply@arizonarealestateacademy.com>',
         to: email,
         subject: 'Password Reset Code - Arizona Real Estate Academy',
         html
       })
+      return { success: true, data: result }
     } catch (error) {
       console.error('Failed to send password reset email:', error)
       return { success: false, error: 'Failed to send email' }
