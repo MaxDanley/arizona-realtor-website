@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { BookOpen, Lock, Loader2, ArrowLeft, CheckCircle } from 'lucide-react'
 import { FadeInUp, ScaleIn } from '@/components/animations'
+import { Navigation } from '@/components/navigation'
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('')
@@ -119,7 +120,9 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-900 via-teal-800 to-teal-700 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-teal-900 via-teal-800 to-teal-700 relative overflow-hidden">
+      <Navigation />
+      
       {/* Background Pattern */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 opacity-10">
@@ -129,8 +132,9 @@ export default function ForgotPassword() {
           <div className="w-full h-full bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
         </div>
       </div>
-
-      <div className="relative sm:mx-auto sm:w-full sm:max-w-md">
+      
+      <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="relative sm:mx-auto sm:w-full sm:max-w-md">
         <FadeInUp className="text-center">
           <div className="flex justify-center mb-6">
             <div className="bg-lime-400 p-3 rounded-full">
@@ -359,6 +363,7 @@ export default function ForgotPassword() {
             </div>
           </div>
         </ScaleIn>
+        </div>
       </div>
     </div>
   )

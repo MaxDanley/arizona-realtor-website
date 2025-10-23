@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { BookOpen, Eye, EyeOff, Loader2, CheckCircle } from 'lucide-react'
 import { FadeInUp, ScaleIn } from '@/components/animations'
+import { Navigation } from '@/components/navigation'
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -90,7 +91,9 @@ export default function SignUp() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-teal-900 via-teal-800 to-teal-700 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-teal-900 via-teal-800 to-teal-700 relative overflow-hidden">
+        <Navigation />
+        
         {/* Background Pattern */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 opacity-10">
@@ -101,7 +104,8 @@ export default function SignUp() {
           </div>
         </div>
         
-        <div className="relative sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+          <div className="relative sm:mx-auto sm:w-full sm:max-w-md">
           <ScaleIn>
             <div className="bg-white/10 backdrop-blur-md py-8 px-4 shadow-2xl sm:rounded-2xl sm:px-10 text-center border border-white/20">
               <CheckCircle className="h-16 w-16 text-lime-400 mx-auto mb-4" />
@@ -117,13 +121,16 @@ export default function SignUp() {
               </Link>
             </div>
           </ScaleIn>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-900 via-teal-800 to-teal-700 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-teal-900 via-teal-800 to-teal-700 relative overflow-hidden">
+      <Navigation />
+      
       {/* Background Pattern */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 opacity-10">
@@ -133,7 +140,9 @@ export default function SignUp() {
           <div className="w-full h-full bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
         </div>
       </div>
-      <div className="relative sm:mx-auto sm:w-full sm:max-w-md">
+      
+      <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="relative sm:mx-auto sm:w-full sm:max-w-md">
         <FadeInUp className="text-center">
           <div className="flex justify-center mb-6">
             <div className="bg-lime-400 p-3 rounded-full">
@@ -336,6 +345,7 @@ export default function SignUp() {
           </div>
           </div>
         </ScaleIn>
+        </div>
       </div>
     </div>
   )
