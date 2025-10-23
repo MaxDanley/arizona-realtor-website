@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, Mail, Loader2, ArrowLeft } from 'lucide-react'
+import { Mail, Loader2, ArrowLeft } from 'lucide-react'
 import { FadeInUp, ScaleIn } from '@/components/animations'
 import { Navigation } from '@/components/navigation'
 

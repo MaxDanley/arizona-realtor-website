@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, Lock, Loader2, ArrowLeft, CheckCircle } from 'lucide-react'
+import { Lock, Loader2, ArrowLeft, CheckCircle } from 'lucide-react'
 import { FadeInUp, ScaleIn } from '@/components/animations'
 import { Navigation } from '@/components/navigation'
 
@@ -95,36 +95,6 @@ export default function ForgotPassword() {
     }
   }
 
-  const handleCodeSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError('')
-    setSuccess('')
-
-    try {
-      const response = await fetch('/api/auth/forgot-password', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, code, newPassword })
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        setSuccess('Password reset successfully! You can now sign in.')
-        setStep('success')
-        setTimeout(() => {
-          router.push('/auth/signin')
-        }, 3000)
-      } else {
-        setError(data.error || 'Invalid reset code')
-      }
-    } catch {
-      setError('An error occurred. Please try again.')
-    } finally {
-      setIsLoading(false)
-    }
-  }
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

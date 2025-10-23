@@ -78,7 +78,7 @@ export const authOptions = {
     strategy: 'jwt' as const
   },
   callbacks: {
-    async signIn({ user, account, profile }: any) {
+    async signIn({ user, account }: any) {
       if (account?.provider === 'google') {
         try {
           // Check if user exists
