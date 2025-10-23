@@ -1,6 +1,7 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Initialize Resend only if API key is available
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 export interface EmailTemplate {
   to: string
@@ -10,6 +11,13 @@ export interface EmailTemplate {
 
 export class EmailService {
   static async sendVerificationCode(email: string, code: string, firstName: string) {
+    // Check if Resend is configured
+    if (!resend) {
+      console.log('Email service not configured. Verification code:', code)
+      console.log('Email would be sent to:', email)
+      return { success: false, error: 'Email service not configured' }
+    }
+
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <div style="background: linear-gradient(135deg, #0d9488, #14b8a6); padding: 30px; border-radius: 10px; text-align: center;">
@@ -41,15 +49,27 @@ export class EmailService {
       </div>
     `
 
-    return await resend.emails.send({
-      from: 'Arizona Real Estate Academy <noreply@arizonarealestateacademy.com>',
-      to: email,
-      subject: 'Verify Your Email - Arizona Real Estate Academy',
-      html
-    })
+    try {
+      return await resend.emails.send({
+        from: 'Arizona Real Estate Academy <noreply@arizonarealestateacademy.com>',
+        to: email,
+        subject: 'Verify Your Email - Arizona Real Estate Academy',
+        html
+      })
+    } catch (error) {
+      console.error('Failed to send verification email:', error)
+      return { success: false, error: 'Failed to send email' }
+    }
   }
 
   static async sendPasswordResetCode(email: string, code: string, firstName: string) {
+    // Check if Resend is configured
+    if (!resend) {
+      console.log('Email service not configured. Password reset code:', code)
+      console.log('Email would be sent to:', email)
+      return { success: false, error: 'Email service not configured' }
+    }
+
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <div style="background: linear-gradient(135deg, #dc2626, #ef4444); padding: 30px; border-radius: 10px; text-align: center;">
@@ -80,11 +100,16 @@ export class EmailService {
       </div>
     `
 
-    return await resend.emails.send({
-      from: 'Arizona Real Estate Academy <noreply@arizonarealestateacademy.com>',
-      to: email,
-      subject: 'Password Reset Code - Arizona Real Estate Academy',
-      html
-    })
+    try {
+      return await resend.emails.send({
+        from: 'Arizona Real Estate Academy <noreply@arizonarealestateacademy.com>',
+        to: email,
+        subject: 'Password Reset Code - Arizona Real Estate Academy',
+        html
+      })
+    } catch (error) {
+      console.error('Failed to send password reset email:', error)
+      return { success: false, error: 'Failed to send email' }
+    }
   }
 }
