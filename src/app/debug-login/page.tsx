@@ -3,10 +3,23 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 
+interface TestResult {
+  success: boolean;
+  data?: any;
+  error?: string;
+}
+
+interface TestUser {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+
 export default function LoginDebugPage() {
-  const [testResults, setTestResults] = useState<any>({})
+  const [testResults, setTestResults] = useState<Record<string, TestResult>>({})
   const [isLoading, setIsLoading] = useState(false)
-  const [testUser, setTestUser] = useState({
+  const [testUser, setTestUser] = useState<TestUser>({
     email: 'test@example.com',
     password: 'password123',
     firstName: 'Test',
@@ -17,9 +30,9 @@ export default function LoginDebugPage() {
     setIsLoading(true)
     try {
       const result = await testFunction()
-      setTestResults(prev => ({ ...prev, [testName]: { success: true, data: result } }))
+      setTestResults((prev) => ({ ...prev, [testName]: { success: true, data: result } }))
     } catch (error) {
-      setTestResults(prev => ({ 
+      setTestResults((prev) => ({ 
         ...prev, 
         [testName]: { 
           success: false, 
@@ -182,7 +195,7 @@ export default function LoginDebugPage() {
             <p className="text-gray-500">No tests run yet. Click a test button above.</p>
           ) : (
             <div className="space-y-4">
-              {Object.entries(testResults).map(([testName, result]: [string, any]) => (
+              {Object.entries(testResults).map(([testName, result]) => (
                 <div key={testName} className="border rounded-lg p-4">
                   <h3 className="font-semibold text-lg mb-2">
                     {testName}
