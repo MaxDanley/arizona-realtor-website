@@ -30,7 +30,21 @@ export default function LoginDebugPage() {
     setIsLoading(true)
     try {
       const result = await testFunction()
-      setTestResults((prev) => ({ ...prev, [testName]: { success: true, data: result } }))
+      
+      // Check if the result indicates failure
+      const isSuccess = result && (
+        result.success === true || 
+        (result.success === undefined && !result.error && !result.message?.includes('MISSING'))
+      )
+      
+      setTestResults((prev) => ({ 
+        ...prev, 
+        [testName]: { 
+          success: isSuccess, 
+          data: result,
+          error: isSuccess ? undefined : (result.error || result.message || 'Unknown error')
+        } 
+      }))
     } catch (error) {
       setTestResults((prev) => ({ 
         ...prev, 
