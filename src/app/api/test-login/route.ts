@@ -30,6 +30,15 @@ export async function POST(request: NextRequest) {
       }, { status: 401 })
     }
 
+    // Check if user has a password (not OAuth user)
+    if (!user.password) {
+      console.log('User has no password (OAuth user):', email)
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Invalid email or password' 
+      }, { status: 401 })
+    }
+
     console.log('User found:', user.email, 'Checking password...')
 
     // Verify password
