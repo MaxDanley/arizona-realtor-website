@@ -42,10 +42,16 @@ export const authOptions = {
             return null
           }
 
+          // Check if user has a password (not OAuth user)
+          if (!user.password) {
+            console.log('User has no password (OAuth user):', credentials.email)
+            return null
+          }
+
           console.log('User found, checking password...')
           const isPasswordValid = await bcrypt.compare(
             credentials.password,
-            user.password!
+            user.password
           )
 
           if (!isPasswordValid) {
