@@ -16,6 +16,8 @@ export default function ForgotPassword() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [step, setStep] = useState<'email' | 'code' | 'password' | 'success'>('email')
+  const [canResend, setCanResend] = useState(true)
+  const [resendCooldown, setResendCooldown] = useState(0)
   const router = useRouter()
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
@@ -33,14 +35,61 @@ export default function ForgotPassword() {
 
       const data = await response.json()
 
-      if (response.ok) {
-        setSuccess('If an account with that email exists, a password reset code has been sent.')
+      if (response.ok && data.success) {
+        setSuccess('Password reset code has been sent to your email.')
         setStep('code')
+        setCanResend(false)
+        setResendCooldown(60) // 60 second cooldown
+        startResendCooldown()
       } else {
         setError(data.error || 'Failed to send reset code')
       }
     } catch {
       setError('An error occurred. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const startResendCooldown = () => {
+    const interval = setInterval(() => {
+      setResendCooldown((prev) => {
+        if (prev <= 1) {
+          setCanResend(true)
+          clearInterval(interval)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+  }
+
+  const handleResendCode = async () => {
+    if (!canResend) return
+    
+    setIsLoading(true)
+    setError('')
+    setSuccess('')
+
+    try {
+      const response = await fetch('/api/auth/resend-reset-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        setSuccess('New password reset code has been sent to your email.')
+        setCanResend(false)
+        setResendCooldown(60) // 60 second cooldown
+        startResendCooldown()
+      } else {
+        setError(data.error || 'Failed to resend code')
+      }
+    } catch {
+      setError('An error occurred while resending code.')
     } finally {
       setIsLoading(false)
     }
@@ -248,6 +297,9 @@ export default function ForgotPassword() {
                   <p className="text-teal-300 text-sm mt-2">
                     Enter the 6-digit code sent to {email}
                   </p>
+                  <p className="text-orange-300 text-xs mt-1">
+                    Code expires in 5 minutes
+                  </p>
                 </div>
 
                 <div className="space-y-3">
@@ -259,14 +311,29 @@ export default function ForgotPassword() {
                     Continue
                   </button>
 
-                  <button
-                    type="button"
-                    onClick={() => setStep('email')}
-                    className="w-full flex justify-center py-3 px-4 border border-white/20 rounded-lg shadow-sm text-sm font-medium text-white bg-white/10 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-400 backdrop-blur-sm transition-all duration-300"
-                  >
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    Back to Email
-                  </button>
+                  <div className="flex space-x-2">
+                    <button
+                      type="button"
+                      onClick={handleResendCode}
+                      disabled={!canResend || isLoading}
+                      className="flex-1 flex justify-center py-3 px-4 border border-lime-400/50 rounded-lg shadow-sm text-sm font-medium text-lime-400 bg-lime-400/10 hover:bg-lime-400/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-400 backdrop-blur-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {canResend ? (
+                        'Resend Code'
+                      ) : (
+                        `Resend in ${resendCooldown}s`
+                      )}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setStep('email')}
+                      className="flex-1 flex justify-center py-3 px-4 border border-white/20 rounded-lg shadow-sm text-sm font-medium text-white bg-white/10 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-400 backdrop-blur-sm transition-all duration-300"
+                    >
+                      <ArrowLeft className="h-4 w-4 mr-2" />
+                      Back
+                    </button>
+                  </div>
                 </div>
               </form>
             ) : (
