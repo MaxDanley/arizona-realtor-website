@@ -48,13 +48,17 @@ function checkRateLimit(ip: string): boolean {
 // Request password reset
 export async function POST(request: NextRequest) {
   try {
+    console.log('=== FORGOT PASSWORD REQUEST ===')
+    
     // Get client IP for rate limiting
     const ip = request.headers.get('x-forwarded-for') || 
                request.headers.get('x-real-ip') || 
                '127.0.0.1'
+    console.log('Client IP:', ip)
 
     // Check rate limit
     if (!checkRateLimit(ip)) {
+      console.log('Rate limit exceeded for IP:', ip)
       return NextResponse.json(
         { error: 'Too many requests. Please try again in 5 minutes.' },
         { status: 429 }
@@ -62,38 +66,50 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
+    console.log('Request body:', { email: body.email })
     const { email } = forgotPasswordSchema.parse(body)
+    console.log('Parsed email:', email)
 
+    console.log('Looking up user in database...')
     const user = await prisma.user.findUnique({
       where: { email }
     })
+    console.log('User lookup result:', user ? `User found: ${user.email}` : 'User not found')
 
     if (!user) {
       // Don't reveal if user exists or not for security
+      console.log('User not found, returning generic message')
       return NextResponse.json({
         message: 'If an account with that email exists, a password reset code has been sent.'
       })
     }
 
     // Generate reset code
+    console.log('Generating reset code...')
     const resetCode = CodeGenerator.generatePasswordResetCode()
     const expiresAt = CodeGenerator.getExpirationTime(5) // 5 minutes
+    console.log('Generated code:', resetCode)
+    console.log('Expires at:', expiresAt)
 
     // Create password reset code
-    await prisma.passwordResetCode.create({
+    console.log('Creating password reset code in database...')
+    const resetCodeRecord = await prisma.passwordResetCode.create({
       data: {
         userId: user.id,
         code: resetCode,
         expiresAt: expiresAt
       }
     })
+    console.log('Password reset code created:', resetCodeRecord.id)
 
     // Send reset email
+    console.log('Sending password reset email...')
     const emailResult = await EmailService.sendPasswordResetCode(
       user.email,
       resetCode,
       user.firstName
     )
+    console.log('Email service result:', emailResult)
 
     // Check if email was actually sent
     if (!emailResult.success) {
@@ -104,22 +120,31 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    console.log('Password reset process completed successfully')
     return NextResponse.json({
       message: 'If an account with that email exists, a password reset code has been sent.',
       success: true
     })
 
   } catch (error) {
+    console.error('=== FORGOT PASSWORD ERROR ===')
+    console.error('Error type:', error instanceof Error ? error.constructor.name : 'Unknown')
+    console.error('Error message:', error instanceof Error ? error.message : 'Unknown error')
+    console.error('Full error:', error)
+    
     if (error instanceof z.ZodError) {
+      console.error('Zod validation error:', error.issues)
       return NextResponse.json(
         { error: 'Invalid input', details: error.issues },
         { status: 400 }
       )
     }
 
-    console.error('Forgot password error:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { 
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 }
     )
   }
