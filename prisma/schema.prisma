@@ -14,13 +14,15 @@ datasource db {
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
-  password      String
+  password      String?
   firstName     String
   lastName      String
   phone         String?
   address       String?
   licenseNumber String?   // Arizona Real Estate License Number
   isActive      Boolean   @default(true)
+  emailVerified Boolean   @default(false)
+  emailVerifiedAt DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
@@ -29,6 +31,8 @@ model User {
   progress      CourseProgress[]
   quizAttempts  QuizAttempt[]
   examAttempts  ExamAttempt[]
+  verificationCodes VerificationCode[]
+  passwordResetCodes PasswordResetCode[]
   
   @@map("users")
 }
@@ -216,4 +220,32 @@ enum EnrollmentStatus {
   COMPLETED
   EXPIRED
   CANCELLED
+}
+
+// Email verification codes
+model VerificationCode {
+  id        String   @id @default(cuid())
+  userId    String
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("verification_codes")
+}
+
+// Password reset codes
+model PasswordResetCode {
+  id        String   @id @default(cuid())
+  userId    String
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("password_reset_codes")
 }

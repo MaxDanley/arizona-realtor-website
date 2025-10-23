@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
+import { EmailService } from '@/lib/email'
+import { CodeGenerator } from '@/lib/code-generator'
 
 const registerSchema = z.object({
   email: z.string().email(),
@@ -33,7 +35,11 @@ export async function POST(request: NextRequest) {
     // Hash password
     const hashedPassword = await bcrypt.hash(validatedData.password, 12)
 
-    // Create user
+    // Generate verification code
+    const verificationCode = CodeGenerator.generateVerificationCode()
+    const expiresAt = CodeGenerator.getExpirationTime(15) // 15 minutes
+
+    // Create user with email verification
     const user = await prisma.user.create({
       data: {
         email: validatedData.email,
@@ -43,6 +49,13 @@ export async function POST(request: NextRequest) {
         phone: validatedData.phone,
         address: validatedData.address,
         licenseNumber: validatedData.licenseNumber,
+        emailVerified: false,
+        verificationCodes: {
+          create: {
+            code: verificationCode,
+            expiresAt: expiresAt
+          }
+        }
       },
       select: {
         id: true,
@@ -52,12 +65,35 @@ export async function POST(request: NextRequest) {
         phone: true,
         address: true,
         licenseNumber: true,
+        emailVerified: true,
         createdAt: true,
       }
     })
 
+    // Send verification email
+    try {
+      await EmailService.sendVerificationCode(
+        user.email,
+        verificationCode,
+        user.firstName
+      )
+    } catch (emailError) {
+      console.error('Failed to send verification email:', emailError)
+      // Don't fail registration if email fails, but log it
+    }
+
     return NextResponse.json(
-      { message: 'User created successfully', user },
+      { 
+        message: 'User created successfully. Please check your email for verification code.', 
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          emailVerified: user.emailVerified
+        },
+        requiresVerification: true
+      },
       { status: 201 }
     )
   } catch (error) {

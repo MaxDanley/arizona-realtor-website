@@ -69,10 +69,15 @@ export default function SignUp() {
       const data = await response.json()
 
       if (response.ok) {
-        setSuccess(true)
-        setTimeout(() => {
-          router.push('/auth/signin')
-        }, 2000)
+        if (data.requiresVerification) {
+          // Redirect to email verification page
+          router.push(`/auth/verify-email?email=${encodeURIComponent(formData.email)}`)
+        } else {
+          setSuccess(true)
+          setTimeout(() => {
+            router.push('/auth/signin')
+          }, 2000)
+        }
       } else {
         setError(data.error || 'An error occurred. Please try again.')
       }

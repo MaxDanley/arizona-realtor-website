@@ -1,9 +1,14 @@
 import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
 import bcrypt from 'bcryptjs'
 import { prisma } from './prisma'
 
 export const authOptions = {
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
     CredentialsProvider({
       name: 'credentials',
       credentials: {
@@ -12,11 +17,14 @@ export const authOptions = {
       },
       async authorize(credentials) {
         try {
+          console.log('NextAuth authorize called with:', credentials?.email)
+          
           if (!credentials?.email || !credentials?.password) {
             console.log('Missing credentials')
             return null
           }
 
+          console.log('Looking up user:', credentials.email)
           const user = await prisma.user.findUnique({
             where: {
               email: credentials.email
@@ -28,9 +36,16 @@ export const authOptions = {
             return null
           }
 
+          // Check if email is verified
+          if (!user.emailVerified) {
+            console.log('Email not verified for user:', credentials.email)
+            return null
+          }
+
+          console.log('User found, checking password...')
           const isPasswordValid = await bcrypt.compare(
             credentials.password,
-            user.password
+            user.password!
           )
 
           if (!isPasswordValid) {
@@ -55,6 +70,38 @@ export const authOptions = {
     strategy: 'jwt' as const
   },
   callbacks: {
+    async signIn({ user, account, profile }: any) {
+      if (account?.provider === 'google') {
+        try {
+          // Check if user exists
+          const existingUser = await prisma.user.findUnique({
+            where: { email: user.email! }
+          })
+
+          if (!existingUser) {
+            // Create new user for Google OAuth
+            const [firstName, ...lastNameParts] = user.name?.split(' ') || ['', '']
+            const lastName = lastNameParts.join(' ') || ''
+
+            await prisma.user.create({
+              data: {
+                email: user.email!,
+                firstName: firstName,
+                lastName: lastName,
+                emailVerified: true, // Google emails are pre-verified
+                emailVerifiedAt: new Date(),
+                password: null // No password for OAuth users
+              }
+            })
+          }
+          return true
+        } catch (error) {
+          console.error('Google sign-in error:', error)
+          return false
+        }
+      }
+      return true
+    },
     async jwt({ token, user }: any) {
       if (user) {
         token.id = user.id
